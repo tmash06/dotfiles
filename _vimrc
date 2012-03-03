@@ -30,6 +30,8 @@ Bundle 'ujihisa/unite-font'
 
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
+
+
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 
@@ -140,6 +142,10 @@ set hidden
 " Renameコマンド用 
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
+" tCommentでC言語スタイルコメント
+nnoremap <C-c><C-c> :TCommentAs c<CR>
+
+"
 " CTRL-hjklでウィンドウ移動
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
