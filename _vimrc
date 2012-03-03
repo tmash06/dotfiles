@@ -1,36 +1,53 @@
-filetype off                   " (1)
-
+" Vundleの読み込み
+filetype off
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()               " (3)
+call vundle#rc()
 
+" Vundle管理のプラグイン
 Bundle 'gmarik/vundle'
-
-" original repos on github
-Bundle 'Shougo/vimshell'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/neocomplcache'
-Bundle 'thinca/vim-quickrun'
-
-" vim-scripts repos
 "Bundle 'rails.vim'
 Bundle 'smartchr'
 Bundle 'tComment'
 Bundle 'Toggle'
 Bundle 'EasyMotion'
 Bundle 'abolish.vim'
-Bundle 'unite.vim'
+Bundle 'Shougo/unite.vim'
 Bundle 'errormarker.vim'
 Bundle 'matchit.zip'
+Bundle 'TwitVim'
+Bundle 'Shougo/vimproc'
+Bundle 'thinca/vim-quickrun'
+Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neocomplcache-snippets-complete.git' 
+Bundle 'Changed'
+Bundle 'tyru/open-browser.vim'
+Bundle 'YankRing.vim'
 
-" Bundle 'align.vim'
+Bundle 'DirDiff.vim'
+Bundle 'scrooloose/syntastic'
+Bundle 'ujihisa/unite-colorscheme'
+Bundle 'ujihisa/unite-font'
+
+Bundle 'vim-scripts/Lucius'
+Bundle 'h1mesuke/unite-outline'
 " non github repos
 "Bundle 'git://git.wincent.com/command-t.git'
 
+" neocomplcache-snippets-complete.git
+" snippetの配置場所
+let g:neocomplcache_snippets_dir='~/.vim/snippets'
+
+" open-browser
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+
+" smartchr
 autocmd FileType c,cpp inoremap <buffer> <expr> = smartchr#one_of(' = ', ' == ', '=', '==')
 autocmd FileType c,cpp inoremap <buffer> <expr> . smartchr#one_of('.', '->', '...')
 autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',') 
 
-""" Unite.vim
+" Unite.vim
 " 起動時にインサートモードで開始
 let g:unite_enable_start_insert = 1
 
@@ -61,25 +78,73 @@ function! s:unite_my_settings()
   imap <silent><buffer> <ESC><ESC> <ESC>q
 endfunction
 
-"""
 " NeoComplCache
-" """
+" 起動時から有効にする
 let g:neocomplcache_enable_at_startup=1
-" _ があっても補完する
+" hoge_foo_barをhogefoobarから補完出来るようにする
 let g:neocomplcache_enable_underbar_completion=1
 " 大文字小文字無視
 "let g:neocomplcache_ignore_case=1
+" snippets展開
+imap <C-k> <Plug>(neocomplcache_snippets_expand)
+smap <C-k> <Plug>(neocomplcache_snippets_expand)
 
+" twitvim
+let twitvim_count = 40
+" nnoremap ,tp :<C-u>PosttoTwitter<CR>
+" nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
+" nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
+" nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
+" nnoremap ,tn :<C-u>NextTwitter<CR>
 
+autocmd FileType twitvim call s:twitvim_my_settings()
+function! s:twitvim_my_settings()
+  set nowrap
+endfunction
 
 "
 filetype plugin indent on
+
+" タブの動作設定
 set smarttab
 set softtabstop=4
 set tabstop=4
-set number
 set expandtab
 set shiftwidth=4
+
+" カラースキーマ
+colorscheme desert
+
+" 行番号表示
+set number
+
+" 編集中の行を強調表示する
+set cursorline
+
+" 入力中のコマンドを右下に表示する
+set showcmd
+
+" スワップファイル用ディレクトリを指定 
+set directory=$HOME/.vimbackup
+
+" 最後まで検索したら先頭に戻る
+set wrapscan
+
+" 既に他のウィンドウで開いているファイルを開かない
+" MEMO:定義済みってエラーが出た
+" runtime macros/editexisting.vim
+
+" 変更中のファイルでも、保存せずに他のファイルを開けるようにする
+set hidden
+
+" Renameコマンド用 
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+" CTRL-hjklでウィンドウ移動
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
 
 
 " 文字コードの自動認識
@@ -138,49 +203,3 @@ set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
-
-" for android ndk
-"set path+=/Users/tmash06/dev/android-ndk-r6/platforms/android-9/arch-arm/usr/include
-"set path+=/Users/tmash06/dev/android-ndk-r6/sources/android/native_app_glue/
-set nocompatible
-
-
-"experiment 2011.10.14
-:function! NdkBuild() 
-    :CdCurrent
-    :w
-    :set makeprg=ndk-build
-    :make 
-:endfunction
-
-:nmap ,nb :call NdkBuild()<CR>
-:nmap ,erc :e ~/.vimrc<CR>
-:nmap ,src :source ~/.vimrc<CR> 
-:set cursorline
-":highlight CursorLine ctermfg=Blue
-:highlight CursorLine ctermbg=Black
-
-" for rename
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
-
-set showcmd
-
-" for swapfile directory
-set directory=$HOME/.vimbackup
-" 最後まで検索したら先頭に戻る
-set wrapscan
-
-"for framework headers
-set path+=/System/Library/Frameworks/GLUT.framework/Headers
-
-" CTRL-hjklでウィンドウ移動
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
-
-" make
-nnoremap ,m :w<CR>:make<CR> 

@@ -1,16 +1,19 @@
 "colorscheme
-:colorscheme wombat 
+
 "neocomplcache color
 hi pMenu gui=NONE guibg=DarkCyan ctermbg=Black ctermfg=Yellow 
 "hi pMenuSBar gui=NONE guibg=DarkCyan ctermbg=Black ctermfg=Yellow
 hi pMenuSel gui=NONE guibg=White ctermbg=Black ctermfg=Yellow
+
+colorscheme desert
+
 "ツールバーを表示しない
 set guioptions-=T
 
 augroup hack234
   autocmd!
   if has('mac')
-    autocmd FocusGained * set transparency=10
+    autocmd FocusGained * set transparency=5
     autocmd FocusLost * set transparency=50
   endif
 augroup END
