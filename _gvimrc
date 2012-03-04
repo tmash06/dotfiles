@@ -5,7 +5,7 @@ hi pMenu gui=NONE guibg=DarkCyan ctermbg=Black ctermfg=Yellow
 "hi pMenuSBar gui=NONE guibg=DarkCyan ctermbg=Black ctermfg=Yellow
 hi pMenuSel gui=NONE guibg=White ctermbg=Black ctermfg=Yellow
 
-colorscheme desert
+colorscheme lucius
 
 "ツールバーを表示しない
 set guioptions-=T

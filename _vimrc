@@ -29,10 +29,43 @@ Bundle 'h1mesuke/unite-outline'
 Bundle 'taglist.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'DirDiff.vim'
+Bundle 'BufOnly.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'a.vim'
 
-" neocomplcache-snippets-complete.git
-" snippetの配置場所
-let g:neocomplcache_snippets_dir='~/.vim/snippets'
+Bundle 'tagexplorer.vim'
+
+" ステータスラインの表示
+  set statusline=%<     " 行が長すぎるときに切り詰める位置
+  set statusline+=[%n]  " バッファ番号
+  set statusline+=%m    " %m 修正フラグ
+  set statusline+=%r    " %r 読み込み専用フラグ
+  set statusline+=%h    " %h ヘルプバッファフラグ
+  set statusline+=%w    " %w プレビューウィンドウフラグ
+  set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
+  set statusline+=%y    " バッファ内のファイルのタイプ
+  set statusline+=\     " 空白スペース
+if winwidth(0) >= 130
+  set statusline+=%F    " バッファ内のファイルのフルパス
+else
+  set statusline+=%t    " ファイル名のみ
+endif
+  set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
+  set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
+  set statusline+=\ \   " 空白スペース2個
+  set statusline+=%1l   " 何行目にカーソルがあるか
+  set statusline+=/
+  set statusline+=%L    " バッファ内の総行数
+  set statusline+=,
+  set statusline+=%c    " 何列目にカーソルがあるか
+  set statusline+=%V    " 画面上の何列目にカーソルがあるか
+  set statusline+=\ \   " 空白スペース2個
+  set statusline+=%P    " ファイル内の何％の位置にあるか
+
+" neocomplcache-snippets-complete.git {{{
+    " snippetの配置場所
+    let g:neocomplcache_snippets_dir='~/.vim/snippets'
+" }}}
 
 " open-browser
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
@@ -49,10 +82,10 @@ autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
 let g:unite_enable_start_insert = 1
 
 " インサート／ノーマルどちらからでも呼び出せるようにキーマップ
-"nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-"inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-"nnoremap <silent> <C-b> :<C-u>Unite buffer file_mru<CR>
-"inoremap <silent> <C-b> <ESC>:<C-u>Unite buffer file_mru<CR>
+nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <C-b> :<C-u>Unite buffer file_mru<CR>
+inoremap <silent> <C-b> <ESC>:<C-u>Unite buffer file_mru<CR>
 
 " バッファ一覧
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
