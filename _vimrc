@@ -5,7 +5,6 @@ call vundle#rc()
 
 " Vundle管理のプラグイン
 Bundle 'gmarik/vundle'
-"Bundle 'rails.vim'
 Bundle 'smartchr'
 Bundle 'tComment'
 Bundle 'Toggle'
@@ -22,18 +21,14 @@ Bundle 'Shougo/neocomplcache-snippets-complete.git'
 Bundle 'Changed'
 Bundle 'tyru/open-browser.vim'
 Bundle 'YankRing.vim'
-
-Bundle 'DirDiff.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'ujihisa/unite-colorscheme'
 Bundle 'ujihisa/unite-font'
-
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
-
-
-" non github repos
-"Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'taglist.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'DirDiff.vim'
 
 " neocomplcache-snippets-complete.git
 " snippetの配置場所
