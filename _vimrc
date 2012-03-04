@@ -32,8 +32,14 @@ Bundle 'DirDiff.vim'
 Bundle 'BufOnly.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'a.vim'
-
 Bundle 'tagexplorer.vim'
+Bundle 'Align'
+Bundle 'mattn/webapi-vim'
+Bundle 'thinca/vim-openbuf'
+" Vim Hacks Projectの記事
+Bundle 'choplin/unite-vim_hacks'
+
+Bundle 'tsukkee/unite-tag'
 
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
@@ -81,12 +87,6 @@ autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
 " 起動時にインサートモードで開始
 let g:unite_enable_start_insert = 1
 
-" インサート／ノーマルどちらからでも呼び出せるようにキーマップ
-nnoremap <silent> <C-f> :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-inoremap <silent> <C-f> <ESC>:<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> <C-b> :<C-u>Unite buffer file_mru<CR>
-inoremap <silent> <C-b> <ESC>:<C-u>Unite buffer file_mru<CR>
-
 " バッファ一覧
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 " ファイル一覧
@@ -95,6 +95,8 @@ nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+" Bookmark
+nnoremap <silent> ,uo :<C-u>Unite bookmark<CR>
 " 全部乗せ
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
@@ -119,13 +121,20 @@ let g:neocomplcache_enable_underbar_completion=1
 imap <C-k> <Plug>(neocomplcache_snippets_expand)
 smap <C-k> <Plug>(neocomplcache_snippets_expand)
 
+" dicwin.vim
+let plugin_dicwin_disable = 1
+
 " twitvim
 let twitvim_count = 40
-" nnoremap ,tp :<C-u>PosttoTwitter<CR>
-" nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
-" nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
-" nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
-" nnoremap ,tn :<C-u>NextTwitter<CR>
+nnoremap ,tp :<C-u>PosttoTwitter<CR>
+" Friends TL
+nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
+" My TL
+nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
+" 自分へのリプライ
+nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
+" 次のページ
+nnoremap ,tn :<C-u>NextTwitter<CR>
 
 autocmd FileType twitvim call s:twitvim_my_settings()
 function! s:twitvim_my_settings()
@@ -143,7 +152,7 @@ set expandtab
 set shiftwidth=4
 
 " カラースキーマ
-colorscheme desert
+colorscheme lucius 
 
 " 行番号表示
 set number
@@ -155,7 +164,10 @@ set cursorline
 set showcmd
 
 " スワップファイル用ディレクトリを指定 
-set directory=$HOME/.vimbackup
+set directory=$HOME/.vimswap
+
+" バックアップファイル用ディレクトリを設定
+set backupdir=$HOME/.vimbackup
 
 " 最後まで検索したら先頭に戻る
 set wrapscan
