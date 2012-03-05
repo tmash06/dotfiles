@@ -35,8 +35,14 @@ snippet once
 	#define $1
 
 	${2}
-
 	#endif /* end of include guard: $1 */
+snippet     ig
+    #ifndef ${1: NAME}
+    #define $1
+
+    ${2}
+    #endif 
+    /* end of file */
 # If Condition
 snippet if
 	if (${1:/* condition */}) {

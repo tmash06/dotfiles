@@ -135,6 +135,8 @@ nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
 nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
 " 次のページ
 nnoremap ,tn :<C-u>NextTwitter<CR>
+" testリスト
+nnoremap ,tlt :<C-u>ListTwitter test<CR>
 
 autocmd FileType twitvim call s:twitvim_my_settings()
 function! s:twitvim_my_settings()
