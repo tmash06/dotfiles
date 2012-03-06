@@ -40,7 +40,7 @@ Bundle 'thinca/vim-openbuf'
 Bundle 'choplin/unite-vim_hacks'
 Bundle 'tsukkee/unite-tag'
 " Bundle 'Shougo/vimfiler'
-
+Bundle 'neco-look'
 " Unite対応Twitterクライアント
 " Bundle 'basyura/twibill.vim'
 " Bundle 'basyura/TweetVim'
@@ -49,6 +49,12 @@ Bundle 'tsukkee/unite-tag'
 " F2/S-F2でvimrcを表示/更新
 nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
 nnoremap <silent> <S-F2> :<C-u>:source ~/.vimrc<CR>:echo 'reload .vimrc'<CR>
+
+" 無限undo
+if has('persistent_undo')
+    set undodir=~/.vimundo
+    set undofile
+endif
 
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
