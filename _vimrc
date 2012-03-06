@@ -27,9 +27,9 @@ Bundle 'ujihisa/unite-font'
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
 Bundle 'taglist.vim'
-Bundle 'tpope/vim-fugitive'
 Bundle 'DirDiff.vim'
 Bundle 'BufOnly.vim'
+Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdtree'
 Bundle 'a.vim'
 Bundle 'tagexplorer.vim'
@@ -38,8 +38,17 @@ Bundle 'mattn/webapi-vim'
 Bundle 'thinca/vim-openbuf'
 " Vim Hacks Projectの記事
 Bundle 'choplin/unite-vim_hacks'
-
 Bundle 'tsukkee/unite-tag'
+" Bundle 'Shougo/vimfiler'
+
+" Unite対応Twitterクライアント
+" Bundle 'basyura/twibill.vim'
+" Bundle 'basyura/TweetVim'
+"
+
+" F2/S-F2でvimrcを表示/更新
+nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
+nnoremap <silent> <S-F2> :<C-u>:source ~/.vimrc<CR>:echo 'reload .vimrc'<CR>
 
 " ステータスラインの表示
   set statusline=%<     " 行が長すぎるときに切り詰める位置
@@ -140,7 +149,7 @@ nnoremap ,tlt :<C-u>ListTwitter test<CR>
 
 autocmd FileType twitvim call s:twitvim_my_settings()
 function! s:twitvim_my_settings()
-  set nowrap
+  " set nowrap
 endfunction
 
 "
