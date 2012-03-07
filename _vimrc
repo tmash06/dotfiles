@@ -27,7 +27,7 @@ Bundle 'ujihisa/unite-font'
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
 Bundle 'taglist.vim'
-Bundle 'DirDiff.vim'
+" Bundle 'DirDiff.vim'
 Bundle 'BufOnly.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdtree'
@@ -40,11 +40,15 @@ Bundle 'thinca/vim-openbuf'
 Bundle 'choplin/unite-vim_hacks'
 Bundle 'tsukkee/unite-tag'
 " Bundle 'Shougo/vimfiler'
-Bundle 'neco-look'
+Bundle 'ujihisa/neco-look'
 " Unite対応Twitterクライアント
 " Bundle 'basyura/twibill.vim'
 " Bundle 'basyura/TweetVim'
 "
+
+" 範囲選択インデントを連続して変更出来るようにする
+vnoremap < <gv
+vnoremap > >gv
 
 " F2/S-F2でvimrcを表示/更新
 nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
