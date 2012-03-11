@@ -17,7 +17,7 @@ Bundle 'TwitVim'
 Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-quickrun'
 Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neocomplcache-snippets-complete.git' 
+Bundle 'Shougo/neocomplcache-snippets-complete.git'
 Bundle 'Changed'
 Bundle 'tyru/open-browser.vim'
 Bundle 'YankRing.vim'
@@ -44,11 +44,33 @@ Bundle 'ujihisa/neco-look'
 " Unite対応Twitterクライアント
 " Bundle 'basyura/twibill.vim'
 " Bundle 'basyura/TweetVim'
+Bundle 'trinity.vim'
+Bundle 'Source-Explorer-srcexpl.vim'
 "
+
+"experiment 2011.10.14
+:function! NdkBuild()
+    :CdCurrent
+    :w
+    :set makeprg=ndk-build
+    :make
+:endfunction
+
+:nmap ,nb :call NdkBuild()<CR>
+
 
 " 範囲選択インデントを連続して変更出来るようにする
 vnoremap < <gv
 vnoremap > >gv
+
+" 他で書き換えられたら自動で読み直す
+set autoread
+
+" 挿入モードでCtrl+pを押すとクリップボードの内容を貼り付けられるようにする "
+imap <C-p>  <ESC>"*pa
+
+" 保存時に行末の空白を除去する
+autocmd BufWritePre * :%s/\s\+$//ge
 
 " F2/S-F2でvimrcを表示/更新
 nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
@@ -100,7 +122,7 @@ vmap gx <Plug>(openbrowser-smart-search)
 " smartchr
 autocmd FileType c,cpp inoremap <buffer> <expr> = smartchr#one_of(' = ', ' == ', '=', '==')
 autocmd FileType c,cpp inoremap <buffer> <expr> . smartchr#one_of('.', '->', '...')
-autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',') 
+autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
 
 " Unite.vim
 " 起動時にインサートモードで開始
@@ -173,7 +195,7 @@ set expandtab
 set shiftwidth=4
 
 " カラースキーマ
-colorscheme lucius 
+colorscheme lucius
 
 " 行番号表示
 set number
@@ -184,7 +206,7 @@ set cursorline
 " 入力中のコマンドを右下に表示する
 set showcmd
 
-" スワップファイル用ディレクトリを指定 
+" スワップファイル用ディレクトリを指定
 set directory=$HOME/.vimswap
 
 " バックアップファイル用ディレクトリを設定
@@ -200,11 +222,11 @@ set wrapscan
 " 変更中のファイルでも、保存せずに他のファイルを開けるようにする
 set hidden
 
-" Renameコマンド用 
+" Renameコマンド用
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
 " tCommentでC言語スタイルコメント
-nnoremap <C-c><C-c> :TCommentAs c<CR>
+autocmd FileType c,cpp nnoremap <C-c><C-c> :TCommentAs c<CR>
 
 "
 " CTRL-hjklでウィンドウ移動
