@@ -8,45 +8,60 @@ Bundle 'gmarik/vundle'
 Bundle 'smartchr'
 Bundle 'tComment'
 Bundle 'Toggle'
-Bundle 'EasyMotion'
 Bundle 'abolish.vim'
 Bundle 'Shougo/unite.vim'
 Bundle 'errormarker.vim'
 Bundle 'matchit.zip'
-Bundle 'TwitVim'
 Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-quickrun'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete.git'
 Bundle 'Changed'
 Bundle 'tyru/open-browser.vim'
-Bundle 'YankRing.vim'
+Bundle 'tyru/restart.vim'
+" キーバインドがNeoComplcacheとかぶったので、とりあえず無効化
+" Bundle 'YankRing.vim'
 Bundle 'scrooloose/syntastic'
-Bundle 'ujihisa/unite-colorscheme'
-Bundle 'ujihisa/unite-font'
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
 Bundle 'taglist.vim'
-" Bundle 'DirDiff.vim'
 Bundle 'BufOnly.vim'
-Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-fugitive.git'
 Bundle 'scrooloose/nerdtree'
 Bundle 'a.vim'
 Bundle 'tagexplorer.vim'
 Bundle 'Align'
 Bundle 'mattn/webapi-vim'
 Bundle 'thinca/vim-openbuf'
-" Vim Hacks Projectの記事
-Bundle 'choplin/unite-vim_hacks'
 Bundle 'tsukkee/unite-tag'
-" Bundle 'Shougo/vimfiler'
+Bundle 'Shougo/vimfiler'
 Bundle 'ujihisa/neco-look'
-" Unite対応Twitterクライアント
-" Bundle 'basyura/twibill.vim'
-" Bundle 'basyura/TweetVim'
 Bundle 'trinity.vim'
 Bundle 'Source-Explorer-srcexpl.vim'
+Bundle 'taku-o/vim-copypath'
+Bundle 'Shougo/vinarise'
+Bundle 'thinca/vim-ref'
+Bundle 'gtags.vim'
+Bundle 'Shougo/vimshell'
+
+Bundle 'mattn/zencoding-vim'
+
 "
+nnoremap <silent> ,gg :<C-u>:CdCurrent<CR>:GtagsCursor<CR>
+nnoremap <silent> ,gp :<C-u>:cn<CR>
+nnoremap <silent> ,gn :<C-u>:cp<CR>
+
+" 終了時に保存するセッションオプションを設定する
+let g:restart_sessionoptions
+    \ = 'blank,buffers,curdir,folds,help,localoptions,tabpages'
+
+if has('mac')
+ 	set gfn=Ricty\ Regular:h14
+ 	set gfw=Ricty\ Regular:h14
+endif
+let g:ref_refe_cmd = "/Users/tmash06/dev/ruby/ref/refe-1_9_2"
+
+" let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 "experiment 2011.10.14
 :function! NdkBuild()
@@ -75,6 +90,9 @@ autocmd BufWritePre * :%s/\s\+$//ge
 " F2/S-F2でvimrcを表示/更新
 nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
 nnoremap <silent> <S-F2> :<C-u>:source ~/.vimrc<CR>:echo 'reload .vimrc'<CR>
+
+" C-mでSave & Make
+nnoremap <silent> <C-m> :<C-u>:w<CR>:make<CR>
 
 " 無限undo
 if has('persistent_undo')
@@ -166,23 +184,22 @@ smap <C-k> <Plug>(neocomplcache_snippets_expand)
 let plugin_dicwin_disable = 1
 
 " twitvim
-let twitvim_count = 40
-nnoremap ,tp :<C-u>PosttoTwitter<CR>
-" Friends TL
-nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
-" My TL
-nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
-" 自分へのリプライ
-nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
-" 次のページ
-nnoremap ,tn :<C-u>NextTwitter<CR>
-" testリスト
-nnoremap ,tlt :<C-u>ListTwitter test<CR>
-
-autocmd FileType twitvim call s:twitvim_my_settings()
-function! s:twitvim_my_settings()
-  " set nowrap
-endfunction
+" let twitvim_count = 40 nnoremap ,tp :<C-u>PosttoTwitter<CR>
+" " Friends TL
+" nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
+" " My TL
+" nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
+" " 自分へのリプライ
+" nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
+" " 次のページ
+" nnoremap ,tn :<C-u>NextTwitter<CR>
+" " testリスト
+" nnoremap ,tlt :<C-u>ListTwitter test<CR>
+"
+" autocmd FileType twitvim call s:twitvim_my_settings()
+" function! s:twitvim_my_settings()
+"   " set nowrap
+" endfunction
 
 "
 filetype plugin indent on
@@ -292,3 +309,6 @@ set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+
+" RVMで設定されたrubyをQuickrunで利用するため
+set shell=/bin/bash\ -i
