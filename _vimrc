@@ -1,6 +1,6 @@
 " Vundleの読み込み
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/vundle.git/
 call vundle#rc()
 
 " Vundle管理のプラグイン
