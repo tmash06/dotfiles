@@ -1,5 +1,2 @@
 vimfiles/bundle
-!vimfiles/bundle/vundle
 .DS_Store
-*~
-*.bak
