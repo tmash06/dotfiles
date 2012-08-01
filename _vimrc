@@ -16,28 +16,30 @@ Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-quickrun'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete.git'
-Bundle 'Changed'
+" Bundle 'Changed'
 Bundle 'tyru/open-browser.vim'
 Bundle 'tyru/restart.vim'
 " キーバインドがNeoComplcacheとかぶったので、とりあえず無効化
 " Bundle 'YankRing.vim'
-Bundle 'scrooloose/syntastic'
+
+" syntax check
+" Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
-Bundle 'taglist.vim'
-Bundle 'BufOnly.vim'
+" Bundle 'taglist.vim'
+" Bundle 'BufOnly.vim'
 Bundle 'tpope/vim-fugitive.git'
-Bundle 'scrooloose/nerdtree'
+" Bundle 'scrooloose/nerdtree'
 Bundle 'a.vim'
-Bundle 'tagexplorer.vim'
+" Bundle 'tagexplorer.vim'
 Bundle 'Align'
 Bundle 'mattn/webapi-vim'
 Bundle 'thinca/vim-openbuf'
 Bundle 'tsukkee/unite-tag'
 Bundle 'Shougo/vimfiler'
 Bundle 'ujihisa/neco-look'
-Bundle 'trinity.vim'
-Bundle 'Source-Explorer-srcexpl.vim'
+" Bundle 'trinity.vim'
+" Bundle 'Source-Explorer-srcexpl.vim'
 Bundle 'taku-o/vim-copypath'
 Bundle 'Shougo/vinarise'
 Bundle 'thinca/vim-ref'
@@ -50,6 +52,11 @@ Bundle 'mattn/zencoding-vim'
 nnoremap <silent> ,gg :<C-u>:CdCurrent<CR>:GtagsCursor<CR>
 nnoremap <silent> ,gp :<C-u>:cn<CR>
 nnoremap <silent> ,gn :<C-u>:cp<CR>
+
+" git
+nnoremap <silent> <GW :<C-u>:Gwrite<CR>
+nnoremap <silent> <GC :<C-u>:Gcommit<CR>
+nnoremap <silent> <GP :<C-u>:Git push<CR>
 
 " 終了時に保存するセッションオプションを設定する
 let g:restart_sessionoptions
