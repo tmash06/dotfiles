@@ -10,13 +10,12 @@ Bundle 'tComment'
 Bundle 'Toggle'
 Bundle 'abolish.vim'
 Bundle 'Shougo/unite.vim'
-Bundle 'errormarker.vim'
+" Bundle 'errormarker.vim'
 Bundle 'matchit.zip'
 Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-quickrun'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neocomplcache-snippets-complete.git'
-" Bundle 'Changed'
 Bundle 'tyru/open-browser.vim'
 Bundle 'tyru/restart.vim'
 " キーバインドがNeoComplcacheとかぶったので、とりあえず無効化
@@ -26,28 +25,20 @@ Bundle 'tyru/restart.vim'
 " Bundle 'scrooloose/syntastic'
 Bundle 'vim-scripts/Lucius'
 Bundle 'h1mesuke/unite-outline'
-" Bundle 'taglist.vim'
-" Bundle 'BufOnly.vim'
 Bundle 'tpope/vim-fugitive.git'
-" Bundle 'scrooloose/nerdtree'
 Bundle 'a.vim'
-" Bundle 'tagexplorer.vim'
 Bundle 'Align'
 Bundle 'mattn/webapi-vim'
-Bundle 'thinca/vim-openbuf'
-Bundle 'tsukkee/unite-tag'
 Bundle 'Shougo/vimfiler'
 Bundle 'ujihisa/neco-look'
-" Bundle 'trinity.vim'
-" Bundle 'Source-Explorer-srcexpl.vim'
 Bundle 'taku-o/vim-copypath'
 Bundle 'Shougo/vinarise'
 Bundle 'thinca/vim-ref'
 Bundle 'gtags.vim'
 Bundle 'Shougo/vimshell'
-
-Bundle 'mattn/zencoding-vim'
-
+"
+" Bundle 'mattn/zencoding-vim'
+" Bundle 'Rip-Rip/clang_complete'
 "
 nnoremap <silent> ,gg :<C-u>:CdCurrent<CR>:GtagsCursor<CR>
 nnoremap <silent> ,gp :<C-u>:cn<CR>
@@ -62,24 +53,27 @@ nnoremap <silent> <GP :<C-u>:Git push<CR>
 let g:restart_sessionoptions
     \ = 'blank,buffers,curdir,folds,help,localoptions,tabpages'
 
-if has('mac')
- 	set gfn=Ricty\ Regular:h14
- 	set gfw=Ricty\ Regular:h14
-endif
+" if has('mac')
+"  	set gfn=Ricty\ Regular:h14
+"  	set gfw=Ricty\ Regular:h14
+" endif
 let g:ref_refe_cmd = "/Users/tmash06/dev/ruby/ref/refe-1_9_2"
 
 " let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
-"experiment 2011.10.14
-:function! NdkBuild()
-    :CdCurrent
-    :w
-    :set makeprg=ndk-build
-    :make
-:endfunction
+" C-;でESC
+imap <C-j>  <ESC>
 
-:nmap ,nb :call NdkBuild()<CR>
-
+" ErrorMarker.vimの設定
+let g:errormarker_errortext = "Er"
+let g:errormarker_warningtext = "Wa"
+set errorformat&
+let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
+set makeprg=LANGUAGE=C\ make
+let g:errormarker_errorgroup = "ErrorLine"
+highlight ErrorLine ctermbg=52 guibg=#5F0000
+let g:errormarker_warninggroup = "WarningLine"
+highlight WarningLine ctermbg=17 guibg=#00005F
 
 " 範囲選択インデントを連続して変更出来るようにする
 vnoremap < <gv
@@ -89,7 +83,7 @@ vnoremap > >gv
 set autoread
 
 " 挿入モードでCtrl+pを押すとクリップボードの内容を貼り付けられるようにする "
-imap <C-p>  <ESC>"*pa
+" imap <C-p>  <ESC>"*pa
 
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
@@ -98,8 +92,13 @@ autocmd BufWritePre * :%s/\s\+$//ge
 nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
 nnoremap <silent> <S-F2> :<C-u>:source ~/.vimrc<CR>:echo 'reload .vimrc'<CR>
 
-" C-mでSave & Make
-nnoremap <silent> <C-m> :<C-u>:w<CR>:make<CR>
+" ,mでSave & Make
+nnoremap <silent> ,m :<C-u>:w<CR>:make<CR>
+" " ,tでSave & Make Test
+nnoremap <silent> ,t :<C-u>:w<CR>:make test<CR>
+
+" インクルードディレクトリ追加
+" set path+=/usr/local/include/
 
 " 無限undo
 if has('persistent_undo')
@@ -156,7 +155,7 @@ let g:unite_enable_start_insert = 1
 " バッファ一覧
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 " ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 " レジスタ一覧
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
@@ -181,32 +180,15 @@ endfunction
 let g:neocomplcache_enable_at_startup=1
 " hoge_foo_barをhogefoobarから補完出来るようにする
 let g:neocomplcache_enable_underbar_completion=1
-" 大文字小文字無視
-"let g:neocomplcache_ignore_case=1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_min_syntax_length = 3
 " snippets展開
 imap <C-k> <Plug>(neocomplcache_snippets_expand)
 smap <C-k> <Plug>(neocomplcache_snippets_expand)
 
 " dicwin.vim
 let plugin_dicwin_disable = 1
-
-" twitvim
-" let twitvim_count = 40 nnoremap ,tp :<C-u>PosttoTwitter<CR>
-" " Friends TL
-" nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
-" " My TL
-" nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
-" " 自分へのリプライ
-" nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
-" " 次のページ
-" nnoremap ,tn :<C-u>NextTwitter<CR>
-" " testリスト
-" nnoremap ,tlt :<C-u>ListTwitter test<CR>
-"
-" autocmd FileType twitvim call s:twitvim_my_settings()
-" function! s:twitvim_my_settings()
-"   " set nowrap
-" endfunction
 
 "
 filetype plugin indent on
@@ -219,7 +201,7 @@ set expandtab
 set shiftwidth=4
 
 " カラースキーマ
-colorscheme lucius
+colorscheme desert
 
 " 行番号表示
 set number
@@ -231,7 +213,7 @@ set cursorline
 set showcmd
 
 " スワップファイル用ディレクトリを指定
-set directory=$HOME/.vimswap
+" set directory=$HOME/.vimswap
 
 " バックアップファイル用ディレクトリを設定
 set backupdir=$HOME/.vimbackup
@@ -319,3 +301,6 @@ endif
 
 " RVMで設定されたrubyをQuickrunで利用するため
 set shell=/bin/bash\ -i
+
+" .cuhをhと同様に開くように設定
+au BufNewFile,BufRead *.cuh setf cpp
