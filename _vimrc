@@ -40,6 +40,20 @@ Bundle 'Shougo/vimshell'
 " Bundle 'mattn/zencoding-vim'
 " Bundle 'Rip-Rip/clang_complete'
 "
+" CUDA
+let g:alternateExtensions_cu = "cuh"
+let g:alternateExtensions_cuh = "cu"
+au BufNewFile,BufRead *.cu setf cpp
+au BufNewFile,BufRead *.cuh setf cpp
+
+
+
+" Temp
+set noswapfile
+
+" QuickRun
+nnoremap <silent> ,q :<C-u>:w<CR>:QuickRun<CR>
+
 nnoremap <silent> ,gg :<C-u>:CdCurrent<CR>:GtagsCursor<CR>
 nnoremap <silent> ,gp :<C-u>:cn<CR>
 nnoremap <silent> ,gn :<C-u>:cp<CR>
@@ -304,3 +318,6 @@ set shell=/bin/bash\ -i
 
 " .cuhをhと同様に開くように設定
 au BufNewFile,BufRead *.cuh setf cpp
+
+set softtabstop=2
+set shiftwidth=2
