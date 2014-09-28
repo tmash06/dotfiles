@@ -1,323 +1,208 @@
-" Vundleの読み込み
-filetype off
-set rtp+=~/.vim/vundle/
-call vundle#rc()
+if has('vim_starting')
+  set nocompatible
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
-" Vundle管理のプラグイン
-Bundle 'gmarik/vundle'
-Bundle 'smartchr'
-Bundle 'tComment'
-Bundle 'Toggle'
-Bundle 'abolish.vim'
-Bundle 'Shougo/unite.vim'
-" Bundle 'errormarker.vim'
-Bundle 'matchit.zip'
-Bundle 'Shougo/vimproc'
-Bundle 'thinca/vim-quickrun'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neocomplcache-snippets-complete.git'
-Bundle 'tyru/open-browser.vim'
-Bundle 'tyru/restart.vim'
-" キーバインドがNeoComplcacheとかぶったので、とりあえず無効化
-" Bundle 'YankRing.vim'
+set hidden
 
-" syntax check
-" Bundle 'scrooloose/syntastic'
-Bundle 'vim-scripts/Lucius'
-Bundle 'h1mesuke/unite-outline'
-Bundle 'tpope/vim-fugitive.git'
-Bundle 'a.vim'
-Bundle 'Align'
-Bundle 'mattn/webapi-vim'
-Bundle 'Shougo/vimfiler'
-Bundle 'ujihisa/neco-look'
-Bundle 'taku-o/vim-copypath'
-Bundle 'Shougo/vinarise'
-Bundle 'thinca/vim-ref'
-Bundle 'gtags.vim'
-Bundle 'Shougo/vimshell'
-"
-" Bundle 'mattn/zencoding-vim'
-" Bundle 'Rip-Rip/clang_complete'
-"
-" CUDA
-let g:alternateExtensions_cu = "cuh"
-let g:alternateExtensions_cuh = "cu"
-au BufNewFile,BufRead *.cu setf cpp
-au BufNewFile,BufRead *.cuh setf cpp
+call neobundle#rc(expand('~/.vim/bundle/'))
 
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
 
+filetype plugin indent on
+NeoBundleCheck
 
-" Temp
-set noswapfile
+" Plugins managed by NeoBundle
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'smartchr'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+NeoBundle 'a.vim'
+NeoBundle 'tpope/vim-fugitive.git'
+NeoBundle 'Toggle'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'vim-scripts/gtags.vim'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'Shougo/unite-ssh'
+NeoBundle 'thinca/vim-quickrun', {
+            \ 'depends' : 'mattn/quickrunex-vim',
+            \ }
+" NeoBundleLazy 'rhysd/vim-clang-format', {
+"            \ 'autoload' : {'filetypes' : ['c', 'cpp', 'objc']}
+"            \ }
+NeoBundle 'tComment'
 
-" QuickRun
-nnoremap <silent> ,q :<C-u>:w<CR>:QuickRun<CR>
+" Unite.vim
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> ,uo :<C-u>Unite outline<CR>
 
-nnoremap <silent> ,gg :<C-u>:CdCurrent<CR>:GtagsCursor<CR>
-nnoremap <silent> ,gp :<C-u>:cn<CR>
-nnoremap <silent> ,gn :<C-u>:cp<CR>
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()
+  " 単語単位からパス単位で削除するように変更
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  " Leave unite window by pressing ESC 2 times.
+  nmap <silent><buffer> <ESC><ESC> q
+  imap <silent><buffer> <ESC><ESC> <ESC>q
+endfunction
 
-" git
-nnoremap <silent> <GW :<C-u>:Gwrite<CR>
-nnoremap <silent> <GC :<C-u>:Gcommit<CR>
-nnoremap <silent> <GP :<C-u>:Git push<CR>
-
-" 終了時に保存するセッションオプションを設定する
-let g:restart_sessionoptions
-    \ = 'blank,buffers,curdir,folds,help,localoptions,tabpages'
-
-" if has('mac')
-"  	set gfn=Ricty\ Regular:h14
-"  	set gfw=Ricty\ Regular:h14
-" endif
-let g:ref_refe_cmd = "/Users/tmash06/dev/ruby/ref/refe-1_9_2"
-
-" let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-
-" C-;でESC
+" ESC by C-j
 imap <C-j>  <ESC>
-
-" ErrorMarker.vimの設定
-let g:errormarker_errortext = "Er"
-let g:errormarker_warningtext = "Wa"
-set errorformat&
-let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
-set makeprg=LANGUAGE=C\ make
-let g:errormarker_errorgroup = "ErrorLine"
-highlight ErrorLine ctermbg=52 guibg=#5F0000
-let g:errormarker_warninggroup = "WarningLine"
-highlight WarningLine ctermbg=17 guibg=#00005F
 
 " 範囲選択インデントを連続して変更出来るようにする
 vnoremap < <gv
 vnoremap > >gv
-
-" 他で書き換えられたら自動で読み直す
-set autoread
-
-" 挿入モードでCtrl+pを押すとクリップボードの内容を貼り付けられるようにする "
-" imap <C-p>  <ESC>"*pa
-
-" 保存時に行末の空白を除去する
-autocmd BufWritePre * :%s/\s\+$//ge
-
-" F2/S-F2でvimrcを表示/更新
-nnoremap <silent> <F2> :<C-u>:e ~/.vimrc<CR>
-nnoremap <silent> <S-F2> :<C-u>:source ~/.vimrc<CR>:echo 'reload .vimrc'<CR>
-
-" ,mでSave & Make
-nnoremap <silent> ,m :<C-u>:w<CR>:make<CR>
-" " ,tでSave & Make Test
-nnoremap <silent> ,t :<C-u>:w<CR>:make test<CR>
-
-" インクルードディレクトリ追加
-" set path+=/usr/local/include/
-
-" 無限undo
-if has('persistent_undo')
-    set undodir=~/.vimundo
-    set undofile
-endif
-
-" ステータスラインの表示
-  set statusline=%<     " 行が長すぎるときに切り詰める位置
-  set statusline+=[%n]  " バッファ番号
-  set statusline+=%m    " %m 修正フラグ
-  set statusline+=%r    " %r 読み込み専用フラグ
-  set statusline+=%h    " %h ヘルプバッファフラグ
-  set statusline+=%w    " %w プレビューウィンドウフラグ
-  set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
-  set statusline+=%y    " バッファ内のファイルのタイプ
-  set statusline+=\     " 空白スペース
-if winwidth(0) >= 130
-  set statusline+=%F    " バッファ内のファイルのフルパス
-else
-  set statusline+=%t    " ファイル名のみ
-endif
-  set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-  set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
-  set statusline+=\ \   " 空白スペース2個
-  set statusline+=%1l   " 何行目にカーソルがあるか
-  set statusline+=/
-  set statusline+=%L    " バッファ内の総行数
-  set statusline+=,
-  set statusline+=%c    " 何列目にカーソルがあるか
-  set statusline+=%V    " 画面上の何列目にカーソルがあるか
-  set statusline+=\ \   " 空白スペース2個
-  set statusline+=%P    " ファイル内の何％の位置にあるか
-
-" neocomplcache-snippets-complete.git {{{
-    " snippetの配置場所
-    let g:neocomplcache_snippets_dir='~/.vim/snippets'
-" }}}
-
-" open-browser
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
 
 " smartchr
 autocmd FileType c,cpp inoremap <buffer> <expr> = smartchr#one_of(' = ', ' == ', '=', '==')
 autocmd FileType c,cpp inoremap <buffer> <expr> . smartchr#one_of('.', '->', '...')
 autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
 
-" Unite.vim
-" 起動時にインサートモードで開始
-let g:unite_enable_start_insert = 1
+syntax on
 
-" バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
-" レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" Bookmark
-nnoremap <silent> ,uo :<C-u>Unite bookmark<CR>
-" 全部乗せ
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-
-" unite.vim上でのキーマッピング
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-  " 単語単位からパス単位で削除するように変更
-  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-  " ESCキーを2回押すと終了する
-  nmap <silent><buffer> <ESC><ESC> q
-  imap <silent><buffer> <ESC><ESC> <ESC>q
-endfunction
-
-" NeoComplCache
-" 起動時から有効にする
-let g:neocomplcache_enable_at_startup=1
-" hoge_foo_barをhogefoobarから補完出来るようにする
-let g:neocomplcache_enable_underbar_completion=1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_min_syntax_length = 3
-" snippets展開
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
-
-" dicwin.vim
-let plugin_dicwin_disable = 1
-
-"
-filetype plugin indent on
-
-" タブの動作設定
+" Tab
 set smarttab
-set softtabstop=4
+set softtabstop=2
 set tabstop=4
 set expandtab
-set shiftwidth=4
+set shiftwidth=2
+set shiftround
+set cindent
 
-" カラースキーマ
+" Display
+set number
+set cursorline
+set showcmd
+set nowrap
+" Color scheme
 colorscheme desert
 
-" 行番号表示
-set number
+" ステータスラインの表示
+set statusline=%<     " 行が長すぎるときに切り詰める位置
+set statusline+=[%n]  " バッファ番号
+set statusline+=%m    " %m 修正フラグ
+set statusline+=%r    " %r 読み込み専用フラグ
+set statusline+=%h    " %h ヘルプバッファフラグ
+set statusline+=%w    " %w プレビューウィンドウフラグ
+set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
+set statusline+=%y    " バッファ内のファイルのタイプ
+set statusline+=\     " 空白スペース
+if winwidth(0) >= 130
+  set statusline+=%F    " バッファ内のファイルのフルパス
+else
+  set statusline+=%t    " ファイル名のみ
+endif
+set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
+set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
+set statusline+=\ \   " 空白スペース2個
+set statusline+=%1l   " 何行目にカーソルがあるか
+set statusline+=/
+set statusline+=%L    " バッファ内の総行数
+set statusline+=,
+set statusline+=%c    " 何列目にカーソルがあるか
+set statusline+=%V    " 画面上の何列目にカーソルがあるか
+set statusline+=\ \   " 空白スペース2個
+set statusline+=%P    " ファイル内の何％の位置にあるか
 
-" 編集中の行を強調表示する
-set cursorline
-
-" 入力中のコマンドを右下に表示する
-set showcmd
-
-" スワップファイル用ディレクトリを指定
-" set directory=$HOME/.vimswap
-
-" バックアップファイル用ディレクトリを設定
-set backupdir=$HOME/.vimbackup
-
-" 最後まで検索したら先頭に戻る
+" Search
 set wrapscan
+set ignorecase
+set smartcase
+set hlsearch
 
-" 既に他のウィンドウで開いているファイルを開かない
-" MEMO:定義済みってエラーが出た
-" runtime macros/editexisting.vim
+" Dirs
+set directory=$HOME/.vim/swapfiles
+set backupdir=$HOME/.vim/backups
 
-" 変更中のファイルでも、保存せずに他のファイルを開けるようにする
-set hidden
-
-" Renameコマンド用
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
-
-" tCommentでC言語スタイルコメント
-autocmd FileType c,cpp nnoremap <C-c><C-c> :TCommentAs c<CR>
-
-"
-" CTRL-hjklでウィンドウ移動
+" Change active window by CTRL-hjkl
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
+" Neocomplete
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" 文字コードの自動認識
-if &encoding !=# 'utf-8'
-  set encoding=japan
-  set fileencoding=japan
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
 endif
-if has('iconv')
-  let s:enc_euc = 'euc-jp'
-  let s:enc_jis = 'iso-2022-jp'
-  " iconvがeucJP-msに対応しているかをチェック
-  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'eucjp-ms'
-    let s:enc_jis = 'iso-2022-jp-3'
-  " iconvがJISX0213に対応しているかをチェック
-  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'euc-jisx0213'
-    let s:enc_jis = 'iso-2022-jp-3'
-  endif
-  " fileencodingsを構築
-  if &encoding ==# 'utf-8'
-    let s:fileencodings_default = &fileencodings
-    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
-    unlet s:fileencodings_default
-  else
-    let &fileencodings = &fileencodings .','. s:enc_jis
-    set fileencodings+=utf-8,ucs-2le,ucs-2
-    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-      set fileencodings+=cp932
-      set fileencodings-=euc-jp
-      set fileencodings-=euc-jisx0213
-      set fileencodings-=eucjp-ms
-      let &encoding = s:enc_euc
-      let &fileencoding = s:enc_euc
-    else
-      let &fileencodings = &fileencodings .','. s:enc_euc
-    endif
-  endif
-  " 定数を処分
-  unlet s:enc_euc
-  unlet s:enc_jis
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
 endif
-" 日本語を含まない場合は fileencoding に encoding を使うようにする
-if has('autocmd')
-  function! AU_ReCheck_FENC()
-    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-      let &fileencoding=&encoding
-    endif
-  endfunction
-  autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
-" 改行コードの自動認識
-set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにす
-if exists('&ambiwidth')
-  set ambiwidth=double
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" NeoSnippets
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
 endif
 
-" RVMで設定されたrubyをQuickrunで利用するため
-set shell=/bin/bash\ -i
+" Include file searching paths
+set path+=,,./../include,./../../include,./../../../include,./../../../../include
 
-" .cuhをhと同様に開くように設定
-au BufNewFile,BufRead *.cuh setf cpp
+" Tag file searching paths
+set tags=./tags;,tags;
 
-set softtabstop=2
-set shiftwidth=2
+" gtags
+nnoremap <C-g><C-j> :GtagsCursor<CR>
+nnoremap <C-g><C-g> :Gtags 
+nnoremap <C-g><C-p> :cp<CR>
+nnoremap <C-g><C-n> :cn<CR>
+
+"gitv
+autocmd FileType git :setlocal foldlevel=99
+
+" quickrun
+nnoremap <C-q><C-q> :QuickRun<CR>
+let g:quickrun_config = {
+            \ "cpp/g++" : {
+            \ 'command' : 'clang++',
+            \ 'cmdopt' : '-std=c++1y -Wall -Wextra',
+            \ 'hook/quickrunex/enable' : 1,
+            \ }
+          \ }
+" yacc 
+au BufNewFile,BufRead *.y setf cpp
