@@ -1,17 +1,19 @@
-if has('vim_starting')
-  set nocompatible
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
+ " Note: Skip initialization for vim-tiny or vim-small.
+ if !1 | finish | endif
 
-set hidden
+ if has('vim_starting')
+   set nocompatible               " Be iMproved
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+   " Required:
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+ endif
 
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+ " Required:
+ call neobundle#begin(expand('~/.vim/bundle/'))
 
-filetype plugin indent on
-NeoBundleCheck
+ " Let NeoBundle manage NeoBundle
+ " Required:
+ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Plugins managed by NeoBundle
 NeoBundle 'thinca/vim-quickrun'
@@ -42,6 +44,15 @@ NeoBundle 'thinca/vim-quickrun', {
 "            \ 'autoload' : {'filetypes' : ['c', 'cpp', 'objc']}
 "            \ }
 NeoBundle 'tComment'
+
+call neobundle#end()
+
+ " Required:
+ filetype plugin indent on
+
+ " If there are uninstalled bundles found on startup,
+ " this will conveniently prompt you to install them.
+ NeoBundleCheck
 
 " Unite.vim
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
@@ -204,5 +215,6 @@ let g:quickrun_config = {
             \ 'hook/quickrunex/enable' : 1,
             \ }
           \ }
+
 " yacc 
 au BufNewFile,BufRead *.y setf cpp

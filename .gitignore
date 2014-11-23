@@ -1,2 +1,4 @@
 vimfiles/bundle
+vimfiles/backups/*
+vimfiles/swapfiles
 .DS_Store
