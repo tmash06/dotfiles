@@ -1,4 +1,7 @@
 vimfiles/bundle
-vimfiles/backups/*
+vimfiles/backups
 vimfiles/swapfiles
+vimfiles/.netrwhist
+
 .DS_Store
+*~

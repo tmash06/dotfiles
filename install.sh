@@ -4,3 +4,4 @@ ln -s ~/dotfiles/_tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/vimfiles ~/.vim
 git submodule init
 git submodule update
+
