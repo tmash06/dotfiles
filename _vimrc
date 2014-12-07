@@ -19,6 +19,7 @@
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'smartchr'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
