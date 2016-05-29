@@ -192,3 +192,10 @@ endfunction
 autocmd FileType c,cpp inoremap <buffer> <expr> = smartchr#one_of(' = ', ' == ', '=', '==')
 autocmd FileType c,cpp inoremap <buffer> <expr> . smartchr#one_of('.', '->', '...')
 autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
+
+"---------------------------------------------------------------------------
+" incsearch:
+"
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
