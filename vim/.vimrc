@@ -3,7 +3,7 @@ if &compatible
 endif
 
 "---------------------------------------------------------------------------
-" Dein:
+" dein:
 "
 
 let s:dein_dir = expand('~/.cache/dein')
@@ -29,7 +29,7 @@ if dein#check_install()
 endif
 
 "---------------------------------------------------------------------------
-" Directory:
+" directory:
 "
 
 let s:dotvim_dir = expand('~/.vim')
@@ -52,7 +52,7 @@ let &directory=s:swapfiles_dir
 let &backupdir=s:backups_dir
 
 "---------------------------------------------------------------------------
-" Edit:
+" edit:
 "
 
 " 範囲選択インデントを連続して変更出来るようにする
@@ -60,7 +60,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 "---------------------------------------------------------------------------
-" Tab & indent:
+" tab & indent:
 "
 
 set smarttab
@@ -72,7 +72,7 @@ set shiftround
 set cindent
 
 "---------------------------------------------------------------------------
-" Status line:
+" status line:
 "
 
 set statusline=%<     " 行が長すぎるときに切り詰める位置
@@ -102,7 +102,19 @@ set statusline+=\ \   " 空白スペース2個
 set statusline+=%P    " ファイル内の何％の位置にあるか
 
 "---------------------------------------------------------------------------
-" Search:
+" display:
+"
+
+set number
+set cursorline
+set showcmd
+set nowrap
+set laststatus=2
+set title
+syntax on
+
+"---------------------------------------------------------------------------
+" search:
 "
 
 set wrapscan
@@ -111,7 +123,7 @@ set smartcase
 set hlsearch
 
 "---------------------------------------------------------------------------
-" Window:
+" window:
 "
 
 nnoremap <C-j> <C-w>j
@@ -126,6 +138,14 @@ nnoremap <C-h> <C-w>h
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+"---------------------------------------------------------------------------
+" vim-clang:
+"
+
+let g:clang_auto = 0 
+let g:clang_c_completeopt = 'menuone,preview' 
+let g:clang_cpp_completeopt = 'menuone,preview' 
 
 "---------------------------------------------------------------------------
 " neocomplete:
@@ -146,15 +166,7 @@ let g:neocomplete#force_omni_input_patterns.cpp =
       \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
 "---------------------------------------------------------------------------
-" vim-clang:
-"
-
-let g:clang_auto = 0 
-let g:clang_c_completeopt = 'menuone,preview' 
-let g:clang_cpp_completeopt = 'menuone,preview' 
-
-"---------------------------------------------------------------------------
-" Unite:
+" unite:
 "
 
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
@@ -180,15 +192,3 @@ endfunction
 autocmd FileType c,cpp inoremap <buffer> <expr> = smartchr#one_of(' = ', ' == ', '=', '==')
 autocmd FileType c,cpp inoremap <buffer> <expr> . smartchr#one_of('.', '->', '...')
 autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
-
-"---------------------------------------------------------------------------
-" Display:
-"
-
-set number
-set cursorline
-set showcmd
-set nowrap
-set laststatus=2
-set title
-syntax on

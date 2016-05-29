@@ -47,3 +47,15 @@ build = 'make'
 
 [[plugins]]
 repo = 'Shougo/neoinclude.vim'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'kmnk/vim-unite-giti'
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
