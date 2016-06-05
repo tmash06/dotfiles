@@ -205,3 +205,9 @@ map g/ <Plug>(incsearch-stay)
 " switch
 "
 let g:switch_mapping = "+"
+
+"---------------------------------------------------------------------------
+" vim-altr
+"
+
+command! A call altr#forward()
