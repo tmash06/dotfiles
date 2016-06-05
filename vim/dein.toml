@@ -59,3 +59,9 @@ repo = 'kmnk/vim-unite-giti'
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'

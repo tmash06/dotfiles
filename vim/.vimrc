@@ -199,3 +199,9 @@ autocmd FileType c,cpp inoremap <buffer> <expr> , smartchr#one_of(', ', ',')
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+
+"---------------------------------------------------------------------------
+" switch
+"
+let g:switch_mapping = "+"
