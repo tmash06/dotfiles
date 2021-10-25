@@ -1,4 +1,3 @@
-
 "---------------------------------------------------------------------------
 " dein:
 "
@@ -9,6 +8,7 @@ endif
 " Add the dein installation directory into runtimepath
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
+
 if dein#load_state('~/.cache/dein')
   call dein#begin('~/.cache/dein')
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
@@ -16,15 +16,17 @@ if dein#load_state('~/.cache/dein')
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/neomru.vim')
   call dein#add('vim-scripts/gtags.vim')
-  call dein#add('vim-scripts/tComment.vim')
-  call dein#add('vim-scripts/smartchr.vim')
+  call dein#add('vim-scripts/tComment')
+  call dein#add('vim-scripts/smartchr')
   call dein#add('vim-scripts/a.vim')
-  call dein#add('tpope/vim-fugitive.vim')
+  call dein#add('tpope/vim-fugitive')
   call dein#add('haya14busa/incsearch.vim')
-  if !has('nvim')
-    call dein#add('roxma/nvim-yarp')
-    call dein#add('roxma/vim-hug-neovim-rpc')
-  endif
+
+
+  call dein#add('Shougo/denite.nvim')
+
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
 
   call dein#end()
   call dein#save_state()
@@ -69,10 +71,10 @@ vnoremap > >gv
 "
 
 set smarttab
-set softtabstop=2
+set softtabstop=4
 set tabstop=4
 set expandtab
-set shiftwidth=2
+set shiftwidth=4
 set shiftround
 set cindent
 
@@ -145,14 +147,6 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 "---------------------------------------------------------------------------
-" vim-clang:
-"
-
-let g:clang_auto = 0 
-let g:clang_c_completeopt = 'menuone,preview' 
-let g:clang_cpp_completeopt = 'menuone,preview' 
-
-"---------------------------------------------------------------------------
 " neocomplete:
 "
 
@@ -191,6 +185,19 @@ function! s:unite_my_settings()
 endfunction
 
 "---------------------------------------------------------------------------
+" unite (ripgrep)
+"
+if executable('rg')
+  let g:unite_source_grep_command = 'rg'
+  let g:unite_source_grep_default_opts = '-n --no-heading --color never'
+  let g:unite_source_grep_recursive_opt = ''
+  " Hit件数制御したいなら以下
+  let g:unite_source_grep_max_candidates = 200
+  " Windowsなら
+  let g:unite_source_grep_encoding='utf-8'
+endif
+
+"---------------------------------------------------------------------------
 " smartchr:
 "
 
@@ -216,3 +223,24 @@ let g:switch_mapping = "+"
 "
 
 command! A call altr#forward()
+
+"---------------------------------------------------------------------------
+" vim-altr
+"
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+
