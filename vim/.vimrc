@@ -227,7 +227,7 @@ call denite#custom#var('grep', {
 " denite (menu):
 "
 
-let s:menus = {}
+let s:menus = g:local_denite_menus
 
 let s:menus.my_commands = {
     \ 'description': 'Example commands'
@@ -238,6 +238,7 @@ let s:menus.my_commands.command_candidates = [
     \ ['Split the window', 'vnew'],
     \ ['Split the window', '!start http://yahoo.co.jp'],
     \ ]
+
 
 call denite#custom#var('menu', 'menus', s:menus)
 

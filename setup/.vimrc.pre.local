@@ -1,0 +1,23 @@
+"---------------------------------------------------------------------------
+" Python
+"
+
+let g:python3_host_prog = 'C:/Python37/Python.exe'
+let dynamic_python_dll='C:/python37/python37.dll'
+
+"---------------------------------------------------------------------------
+" denite (menu):
+"
+
+let g:local_denite_menus = {}
+let g:local_denite_menus.local_commands = {
+    \ 'description': 'Example commands'
+    \ }
+
+let g:local_denite_menus.local_commands.command_candidates = [
+    \ ['Split the window', 'vnew'],
+    \ ['Split the window', 'vnew'],
+    \ ['Split the window', '!start http://yahoo.co.jp'],
+    \ ]
+
+set encoding=utf-8
