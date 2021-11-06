@@ -337,6 +337,9 @@ function! s:defx_my_settings() abort
     \ defx#do_action('change_vim_cwd')
 endfunction
 
+nnoremap <silent> <C-d><C-f><C-h> :<C-u>Defx -new `expand('%:h:p')` -split=vertical<CR>
+nnoremap <silent> <C-d><C-f><C-r> :<C-u>Defx -resume -split=vertical<CR>
+
 
 "---------------------------------------------------------------------------
 " deoplete:
