@@ -21,10 +21,10 @@ if dein#load_state('~/.cache/dein')
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('haya14busa/incsearch.vim')
   call dein#add('kana/vim-altr')
+  call dein#add('mattn/vim-findroot')
   call dein#add('roxma/nvim-yarp')
   call dein#add('roxma/vim-hug-neovim-rpc')
   call dein#add('tpope/vim-fugitive')
-  call dein#add('vim-scripts/a.vim')
   call dein#add('vim-scripts/gtags.vim')
   call dein#add('vim-scripts/smartchr')
   call dein#add('vim-scripts/tComment')
@@ -204,36 +204,13 @@ function! s:denite_filter_my_settings() abort
     \ denite#do_map('move_up_path')
 endfunction
 
-
-nnoremap <silent> ,df :<C-u>DeniteBufferDir -buffer-name=files file file:new<CR>
 nnoremap <silent> <C-d><C-d><C-f> :<C-u>DeniteBufferDir -buffer-name=files file file:new<CR>
-
-nnoremap <silent> ,db :<C-u>Denite buffer<CR>
 nnoremap <silent> <C-d><C-d><C-b> :<C-u>Denite buffer<CR>
-
-nnoremap <silent> ,dr :<C-u>Denite -buffer-name=register register<CR>
 nnoremap <silent> <C-d><C-d><C-r> :<C-u>Denite -buffer-name=register register<CR>
-
-nnoremap <silent> ,dm :<C-u>Denite file_mru<CR>
-nnoremap <silent> <C-d><C-d><C-m> :<C-u>Denite file_mru<CR>
-
-nnoremap <silent> ,do :<C-u>Denite outline<CR>
 nnoremap <silent> <C-d><C-d><C-o> :<C-u>Denite outline<CR>
-
-nnoremap <silent> ,de :<C-u>Denite -resume<CR>
 nnoremap <silent> <C-d><C-d><C-e> :<C-u>Denite -resume<CR>
-
-nnoremap <silent> ,uf :<C-u>DeniteBufferDir -buffer-name=files file<CR>
-nnoremap <silent> ,um :<C-u>Denite file_mru<CR>
-
-call denite#custom#source('file', 'matchers',
-    \ ['matcher/fuzzy'])
-
-call denite#custom#source('buffer', 'matchers',
-    \ ['matcher/fuzzy'])
-
-call denite#custom#source('file_mru', 'matchers',
-    \ ['matcher/fuzzy'])
+nnoremap <silent> <C-d><C-d><C-m> :<C-u>Denite file_mru -matchers='matcher_project_files,matcher_fuzzy'<CR>
+nnoremap <silent> <C-d><C-d><C-a> :<C-u>Denite file_mru -matchers='matcher_fuzzy'<CR>
 
 "---------------------------------------------------------------------------
 " denite (ripgrep):
