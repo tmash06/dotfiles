@@ -28,6 +28,8 @@ if dein#load_state('~/.cache/dein')
   call dein#add('vim-scripts/gtags.vim')
   call dein#add('vim-scripts/smartchr')
   call dein#add('vim-scripts/tComment')
+  call dein#add('tommcdo/vim-fubitive')
+  call dein#add('tpope/vim-rhubarb')
   call dein#end()
   call dein#save_state()
 endif
